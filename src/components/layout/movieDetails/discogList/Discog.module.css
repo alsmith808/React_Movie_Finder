@@ -1,0 +1,25 @@
+.Discog {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.Discog ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.Discog li {
+  display: flex;
+  list-style-type: none;
+  color: orange;
+  height: 2.5rem;
+  border-bottom: 1px solid #f0efef;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  padding-left: .5rem; 
+}
+
+.Discog li:nth-child(odd) {
+  background: #f9f9f9;
+}

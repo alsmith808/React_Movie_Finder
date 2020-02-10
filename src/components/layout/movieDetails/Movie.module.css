@@ -1,0 +1,11 @@
+.MovieDesc {
+  min-height: 7.5rem;
+  max-height: 7.5rem;
+  overflow-y: auto;
+}
+
+.Desc {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+

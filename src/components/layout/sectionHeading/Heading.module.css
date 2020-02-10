@@ -1,0 +1,10 @@
+.Heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.Heading h2 {
+  color: #fd3434;
+}
