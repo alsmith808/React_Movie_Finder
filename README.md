@@ -4,25 +4,26 @@ Flikz is a movie finding web app which serves the user details of current movies
 
 ## Project purpose and scope
 
-Create a React app after taking Complete Modern React course from Academind 
-Get up to speed with React Hooks
-Use Context API to manage React state
-Improve upon previous Flikz project made with pure javascript and materialize css
-Get familiar with Material UI
+- Create a React app after taking Complete Modern React course from Academind             
+- Create a React app after taking Complete Modern React course from Academind 
+- Get up to speed with React Hooks
+- Use Context API to manage React state
+- Improve upon previous Flikz project made with pure javascript and materialize css
+- Get familiar with Material UI
 
 
 ## Packages and technologies used
 
-Create-React-App
-React Hooks
-React Router
-Context API
-Material UI
-MovieDB API
-Axios
-Flippy Cards
-React Scroll
-React Spinners
+- Create-React-App
+- React Hooks
+- React Router
+- Context API
+- Material UI
+- MovieDB API
+- Axios
+- Flippy Cards
+- React Scroll
+- React Spinners
 
 
 ## Available Scripts
