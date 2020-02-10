@@ -3,8 +3,7 @@
 Flikz is a movie finding web app which serves the user details of current movies and search facility for finding any movies in the API..
 
 ## Project purpose and scope
-
-- Create a React app after taking Complete Modern React course from Academind             
+             
 - Create a React app after taking Complete Modern React course from Academind 
 - Get up to speed with React Hooks
 - Use Context API to manage React state
@@ -25,6 +24,12 @@ Flikz is a movie finding web app which serves the user details of current movies
 - React Scroll
 - React Spinners
 
+### THE MOVIE DB API
+
+- Need to sign up for free API key 
+- create .env file in root directory
+- add your api key details to .env ....REACT_APP_MOVIE_API_KEY=12345
+- <https://www.themoviedb.org/documentation/api>
 
 ## Available Scripts
 
