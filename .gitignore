@@ -18,8 +18,10 @@ serviceWorker.js
 .env.test.local
 .env.production.local
 .env
+.htaccess
 
 bugs_todo.txt
+Auth Steps.txt
 
 npm-debug.log*
 yarn-debug.log*
