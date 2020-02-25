@@ -95,11 +95,17 @@ const AuthProvider = props => {
     const fullPath = new URL(myUrl)
     const searchParams = new URLSearchParams(fullPath.search)
     const token = searchParams.get('request_token')
-    setTknVal(token)    
-    if(searchParams.has('request_token')) {
+    const tokenStatus = searchParams.get('approved')
+    if (tokenStatus === 'true') {
+      setTknVal(token)
       setShowFavSect(true) 
-      setTknApproved(true)                   
+      setTknApproved(true)
     }
+    // setTknVal(token)    
+    // if(searchParams.has('request_token')) {
+    //   setShowFavSect(true) 
+    //   setTknApproved(true)                   
+    // }
   }
 
   const createSession = async () => {
@@ -208,6 +214,7 @@ const AuthProvider = props => {
       const data = await res.json()
       setShowFavSect(false)
       setSessionCreated(false)
+      localStorage.clear()
       console.log(data)
     } catch (error) {
       console.error(error)
