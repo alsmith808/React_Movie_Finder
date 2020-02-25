@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const WatchItem = ({ title, release, avatar, id, removeMovie, getMovie }) => {
+const WatchItem = ({ title, release, avatar, id, removeMovie, handleClick }) => {
   const classes = useStyles()
   return (
     <Fragment>
@@ -32,7 +32,7 @@ const WatchItem = ({ title, release, avatar, id, removeMovie, getMovie }) => {
                 cursor: 'pointer'}}
               alt={title}
               src={avatar}
-              onClick={() => getMovie(id)}
+              onClick={() => handleClick(id)}
               onError={e => {
                 e.target.onerror = null
                 e.target.src = './no_image.png'

@@ -13,6 +13,7 @@ const AuthProvider = props => {
   const [displayName, setDisplayName] = useState('')
   const [loading, setLoading] = useState(false)
   const [watchLater, setWatchLater] = useState([])
+  const [listLoaded, setListLoaded] = useState(false)
   const [userID, setUserID] = useState([])
 
   // on app mount check url for an approved token
@@ -29,11 +30,48 @@ const AuthProvider = props => {
   }, [tknApproved])
 
 
-//   useEffect(() => {
-//     if (sessionCreated !== false) {
-//       getWatchlist().then(setWatchLater)
-//     }
-//   }, [watchLater])
+  useEffect(() => {
+    if (sessionCreated !== false) {
+        const monitorList = async () => {
+          await getWatchlist()
+          await setWatchLater()
+        }
+        monitorList()                              
+    }
+  }, [])
+
+  // The two use effect hooks below manage a refresh to store state in local storage
+  // runs first
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    const show = localStorage.getItem('show')
+    if (sessId) {
+      setSessId(JSON.parse(token))
+      setShowFavSect(JSON.parse(show))
+    } 
+  }, [])
+  // runs second
+  useEffect(() => {
+    localStorage.setItem('token', JSON.stringify(sessId))
+    localStorage.setItem('show', JSON.stringify(showFavSect))            
+  }, [])
+
+  // The two use effect hooks below manage a refresh to store state in local storage
+  // runs first
+  useEffect(() => {
+    const list = localStorage.getItem('list')
+    const name = localStorage.getItem('name')
+    if (watchLater) {
+      setWatchLater(JSON.parse(list))
+      setDisplayName(JSON.parse(name))
+    } 
+  }, [])
+  // runs second
+  useEffect(() => {    
+    localStorage.setItem('name', JSON.stringify(displayName))
+    localStorage.setItem('list', JSON.stringify(watchLater))           
+  }, [])
+
 
 
   const reqToken = async () => {
@@ -82,6 +120,8 @@ const AuthProvider = props => {
       const session_id = jsonResObj.session_id 
       console.log(session_id)     
       setSessId(session_id)
+      localStorage.setItem('token', JSON.stringify(session_id))
+      localStorage.setItem('show', JSON.stringify(true))
       setSessionCreated(true)
     } catch (error) {
       console.error(error)
@@ -116,20 +156,26 @@ const AuthProvider = props => {
       const watchList = jsonResObj.results
       console.log(watchList)
       setWatchLater(watchList)
+      setListLoaded(true)
       setLoading(false)
-      return watchList      
+      localStorage.setItem('name', JSON.stringify(displayName))
+      localStorage.setItem('list', JSON.stringify(watchList))
+    //   return watchList      
     } catch (error) {
       console.error(error)
     }
   }
 
+  // user id and tf denotes true false
+  // true..add to watchlist, false..not in watchlist
+  // this function adds or removes a movie
   const addToWatchList = async (id, tf) => {
     // 
     try {
       const details = await getUserDetails()
       const userId = details.id
       const url = `https://api.themoviedb.org/3/account/${userId}/watchlist?api_key=${key}&session_id=${sessId}`
-      const movieToWatch = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -140,6 +186,29 @@ const AuthProvider = props => {
             "watchlist": tf
           })
       })
+      await getWatchlist()
+    } catch (error) {
+      console.error(error)
+    }    
+  }
+
+  const logOut = async () => {
+    //  delete user session 
+    try {
+      const url = `https://api.themoviedb.org/3/authentication/session?api_key=${key}`
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({         
+            "session_id": sessId          
+          })
+      })
+      const data = await res.json()
+      setShowFavSect(false)
+      setSessionCreated(false)
+      console.log(data)
     } catch (error) {
       console.error(error)
     }    
@@ -158,7 +227,8 @@ const AuthProvider = props => {
         loading,
         watchLater,
         userID,
-        showFavSect
+        showFavSect,
+        logOut
       }}
     >
       {props.children}

@@ -31,7 +31,7 @@ function WatchList() {
 
   const authContext = useContext(AuthContext)
   const { tknVal, sessionCreated, getWatchlist, addToWatchList, 
-    displayName, watchLater, loading, userID, showFavSect } = authContext
+    displayName, watchLater, loading, showFavSect } = authContext
 
 
   const spinner = (
@@ -67,6 +67,7 @@ function WatchList() {
                     release={movie.release_date}
                     avatar={img}
                     id={movie.id}
+                    handleClick={getMovie}
                     removeMovie={addToWatchList}
                   />
                 </Grid>

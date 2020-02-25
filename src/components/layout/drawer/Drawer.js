@@ -104,7 +104,7 @@ export default function PersistentDrawerLeft() {
   const year = new Date().getFullYear() - 1
 
   const authContext = useContext(AuthContext)
-  const { reqToken, sessionCreated } = authContext
+  const { reqToken, sessionCreated, logOut } = authContext
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -167,7 +167,14 @@ export default function PersistentDrawerLeft() {
               <Button className={classes.textColor}>Login</Button>            
             </ScrollLink>
             )}            
-            { sessionCreated && (<Button className={classes.textColor}>Logout</Button>) }            
+            { sessionCreated && 
+              (<Button 
+                className={classes.textColor} 
+                onClick={logOut}
+               >
+                Logout
+              </Button>) 
+            }            
           </div>         
         </Toolbar>
       </AppBar>
@@ -234,11 +241,13 @@ export default function PersistentDrawerLeft() {
           </ScrollLink>
           )}         
           { sessionCreated && (
-            <ListItem button>
+            <ListItem button onClick={() => logOut()}>
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>             
-            <ListItemText primary='Logout' />
+            <ListItemText 
+              primary='Logout'               
+            />
           </ListItem>
           ) }         
         </List>
