@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Link as ScrollLink } from "react-scroll"
 import { animateScroll as scroll } from "react-scroll"
@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
+import PersonIcon from '@material-ui/icons/Person'
+import CloseIcon from '@material-ui/icons/Close'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -21,6 +23,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import TheatersIcon from '@material-ui/icons/Theaters'
 import styles from './Drawer.module.css'
+
+import { AuthContext } from '../../contexts/AuthContext'
 
 const drawerWidth = 240
 
@@ -99,6 +103,9 @@ export default function PersistentDrawerLeft() {
 
   const year = new Date().getFullYear() - 1
 
+  const authContext = useContext(AuthContext)
+  const { reqToken, sessionCreated, logOut } = authContext
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -151,6 +158,23 @@ export default function PersistentDrawerLeft() {
               duration={1200}>
               <Button className={classes.textColor}>Upcoming</Button>            
             </ScrollLink>
+            {!sessionCreated && (
+            <ScrollLink
+              to='Watchlist'
+              onClick={reqToken}
+              smooth
+              duration={1200}>
+              <Button className={classes.textColor}>Login</Button>            
+            </ScrollLink>
+            )}            
+            { sessionCreated && 
+              (<Button 
+                className={classes.textColor} 
+                onClick={logOut}
+               >
+                Logout
+              </Button>) 
+            }            
           </div>         
         </Toolbar>
       </AppBar>
@@ -203,6 +227,29 @@ export default function PersistentDrawerLeft() {
               <ListItemText primary='Upcoming' />
             </ListItem>
           </ScrollLink>
+          {!sessionCreated && (
+            <ScrollLink
+            to='Watchlist'
+            smooth
+            duration={1200}>
+            <ListItem button onClick={reqToken}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>             
+              <ListItemText primary='Login' />
+            </ListItem>
+          </ScrollLink>
+          )}         
+          { sessionCreated && (
+            <ListItem button onClick={() => logOut()}>
+            <ListItemIcon>
+              <CloseIcon />
+            </ListItemIcon>             
+            <ListItemText 
+              primary='Logout'               
+            />
+          </ListItem>
+          ) }         
         </List>
         <Divider />
       </Drawer>

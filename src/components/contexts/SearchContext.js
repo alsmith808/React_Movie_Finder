@@ -16,7 +16,9 @@ const SearchProvider = props => {
   // scroll down to search results when movies state changes/successfull search
   useEffect(() => {
     setShowSearchResults(true)
-    scroll.scrollMore(400)
+    if (movies !== []) {
+      scroll.scrollMore(400)     
+    }
   }, [movies])
 
   useEffect(() => {
@@ -35,6 +37,7 @@ const SearchProvider = props => {
       const data = await response.json()
       const moviesSlice = data.results.slice(0, limit)
       setMovies(moviesSlice)
+      console.log(moviesSlice)     
       setLoading(false)      
     }
     else {

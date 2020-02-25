@@ -1,0 +1,9 @@
+.watchlist {
+  min-height: 8rem;
+  margin-bottom: 4rem;
+}
+
+.watchlist a {
+  color: white;
+  text-decoration: none;
+}

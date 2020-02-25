@@ -23,8 +23,8 @@ const MovieProvider = props => {
   }, [cast])
 
 
-  useEffect(() => {
-    showCast ? scrollToSection('Cast') : scrollToSection('Movie')    
+  useEffect(() => {    
+    showCast ? scrollToSection('Cast') : scrollToSection('Movie')        
   }, [showCast])
 
 

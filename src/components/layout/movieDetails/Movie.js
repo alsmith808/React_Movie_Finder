@@ -14,6 +14,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import { MovieContext } from '../../contexts/MovieContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import styles from './Movie.module.css'
 import popcorn from './poster_ph.jpeg'
 import Spinner from '../../spinner/Spinner'
@@ -86,8 +87,13 @@ function numberWithCommas(x) {
 
 export default function Movie() {
   const classes = useStyles()
+
   const movieContext = useContext(MovieContext)
   const { movieDetails, searched, loading, toggleCast, showMovieDetails, showCast } = movieContext
+
+  const authContext = useContext(AuthContext)
+  const { sessionCreated, addToWatchList } = authContext
+
   const [director, setDirector] = useState('')
   const [genre, setGenre] = useState('')
   const [revenue, setRevenue] = useState(0)
@@ -239,6 +245,14 @@ export default function Movie() {
                   className={classes.button}>
                   {showCast ? 'Hide' : 'Cast'}
                 </Button>
+                {sessionCreated && (
+                  <Button 
+                    variant='contained'
+                    onClick={() => addToWatchList(movieDetails.id, true)} 
+                    className={classes.button}>
+                    Watchlater
+                  </Button>
+                )}
               </CardActions>
             </Card>
           </Element>

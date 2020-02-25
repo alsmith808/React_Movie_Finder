@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import ResultsItem from './ResultsItem'
 import { SearchContext } from '../../contexts/SearchContext'
 import { MovieContext } from '../../contexts/MovieContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import Spinner from '../../spinner/Spinner'
 
 const useStyles = makeStyles(theme => ({
@@ -25,8 +26,10 @@ export default function ResultsList() {
 
   const searchContext = useContext(SearchContext)
   const movieContext = useContext(MovieContext)
+  const authContext = useContext(AuthContext)
   const { movies, loading, query, getMovies, showSearchResults } = searchContext
   const { getMovie } = movieContext
+  // const { getMovie } = authContext
   
 
   useEffect(() => {
@@ -62,6 +65,7 @@ export default function ResultsList() {
                     avatar={img}
                     id={movie.id}
                     getMovie={getMovie}
+                    removeMovie={getMovie}
                   />
                 </Grid>
               )
